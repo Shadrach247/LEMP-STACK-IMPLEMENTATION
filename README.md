@@ -98,3 +98,51 @@ To make it work and accessible from the internet, I had to do a manual adjustmen
 Infact, it is the same content that we previously got by _'curl'_ command, but represented in a nice HTML formatting by the web browser.
 
 # **STEP 2 - Installing MySQL**
+Now that you have a Web Server up and running you need to install a Database Management System(DBMS) to be able to store and manage data for your site in a relational database. MySQL is a popular relational database management system used within PHP environments, so we will use it in our project.
+Again use **_apt_** to acquire and install this software :
+```Bash
+$ sudo apt install mysql-server
+```
+When prompted, confirm installation by typing **Y**, and then ENTER.
+
+When the installation is finished, it's recommended that you run a security script that comes pre-installed with MySQL. This Script will remove some insecure default settings and lock down access to your database system.
+Start the interactive script by running:
+```Bash
+$ sudo mysql_secure_installation
+```
+This will ask if you want to configure the VALIDATE PASSWORD PLUGIN. Answer **Y** for "yes" or anything else to continue without enabling.
+If you answer "yes", you'll be asked to select a level of password validation. Keep in mind that if you enter **2** for the strongest level you will receive errors when attempting to set any password which does not contain numbers, upper and lowercase letters, and special charachers, or which is based on common dictionary words.
+
+Regardless of whether you chose to set up the VALIDATE PASSWORD PLUGIN, your Server will next ask you to select and confirm a password for MySQL **root** user. This is not to be confused with the **system root**. The **database root** user is an administrative user with full privileges over the database system. Even though the default authentication method for the MySQL root user dispenses the use of a password, **even when one is set**, you should define a strong password here as an additional safety measure.
+
+If you enabled password validation, you'll be shown the password strength for the root password you just entered and your Server will ask if you want to continue with that password. If you are happy with your current password, enter **Y** for "yes" at the prompt.
+
+For the rest of the questions, press **Y** and hit ENTER key at the prompt. This will remove some anonymous users and the test database, disable remote root logins, and load these new rules so that MySQL immediately respect the changes you have made.
+
+When you are finished, test if you're able to log into the MySQL console by typing:
+
+```Bash
+$ sudo mysql
+```
+This will connect to the MySQL Server as the administrative database user **root**, which is infered by the use of **_sudo_** when running this command.
+
+You should see an output like this :
+
+To exit the MySQL console, type :
+
+Notice that you didn't need to provide a password to connect as the **root** user, even though you have defined one when running the mysql_secure_installation script. That is because the default authentication method for the administrative MySQL user is **unix_socket** instead of **password**. Even though this might look like a security concern at first, it makes the database server more secure because the only users allowed to log is as the root MySQL user are the system users with _**sudo**_ privileges connecting from the console or through an application running with the same privileges. In practical terms, that means you won't be able to use the administrative database root user to connect from your PHP application. Setting a password for the root MySQL accounts works as a safeguard, in case the default authentication method is changed from **unix_socket** to **password**.
+
+For increased security, it's best to have dedicated user accounts with less expansive privileges set up for every database, especially if you plan on having multiple databases hosted on your server
+
+Your MySQL Server is now installed and secured. Next, we will install PHP, the final component in the **LEMP Stack**
+
+# **STEP 3 - Installing PHP**
+You have Nginx installed to serve your content and MySQL installed to store and manage your data. Now you can install PHP to process code and generate dynamic content for the Web Server.
+
+While Apache embeds the PHP interpreter in each request, Nginx requires an external program to handle PHP processing and act as a bridge between the PHP interpreter itself and the Web Server. This allows for a better performance in most PHP-based websites, but it requires additional configuration. You'll need to install **php-fpm**, which stands for "PHP fastCGI Process Manager", and tell Nginx to pass PHP requests to this software for processing. Additionally you'll need **php-mysql**, a PHP module that allows PHP to communicate with MySQL-based databases. Core PHP packages will automatically be installed as dependenes.
+
+To install these 2 pacjages at once, **run :**
+```Bash
+$ sudo apt install php-fpm php-mysql
+```
+When prompted, type **Y** and press ENTER to confirm installation. You now have your PHP components installed. Next, you will configure Nginx to use them.
