@@ -244,13 +244,19 @@ server {
 
 Here’s what each of these directives and location blocks do:
 
-**_listen_** — Defines what port Nginx will listen on. In this case, it will listen on port **_80_**, the default port for HTTP.
-**_root_** — Defines the document root where the files served by this website are stored.
-**_index_** — Defines in which order Nginx will prioritize index files for this website. It is a common practice to list **_index.html_** files with a higher precedence than **_index.php_** files to allow for quickly setting up a maintenance landing page in PHP applications. You can adjust these settings to better suit your application needs.
-**_server_name_** — Defines which domain names and/or IP addresses this server block should respond for. **Point this directive to your server’s domain name or public IP address.**
-**_location /_** — The first location block includes a **_try_files_** directive, which checks for the existence of files or directories matching a URI request. If Nginx cannot find the appropriate resource, it will return a 404 error.
-**_location ~ \.php$_** — This location block handles the actual PHP processing by pointing Nginx to the fastcgi-php.conf configuration file and the **_php7.4-fpm.sock file_**, which declares what socket is associated with **_php-fpm_**.
-**_location ~ /\.ht_** — The last location block deals with **_.htaccess_** files, which Nginx does not process. By adding the deny all directive, if any **_.htaccess_** files happen to find their way into the document root ,they will not be served to visitors.
+* **_listen_** — Defines what port Nginx will listen on. In this case, it will listen on port **_80_**, the default port for HTTP.
+
+* **_root_** — Defines the document root where the files served by this website are stored.
+
+* **_index_** — Defines in which order Nginx will prioritize index files for this website. It is a common practice to list **_index.html_** files with a higher precedence than **_index.php_** files to allow for quickly setting up a maintenance landing page in PHP applications. You can adjust these settings to better suit your application needs.
+
+* **_server_name_** — Defines which domain names and/or IP addresses this server block should respond for. **Point this directive to your server’s domain name or public IP address.**
+
+* **_location /_** — The first location block includes a **_try_files_** directive, which checks for the existence of files or directories matching a URI request. If Nginx cannot find the appropriate resource, it will return a 404 error.
+
+* **_location ~ \.php$_** — This location block handles the actual PHP processing by pointing Nginx to the fastcgi-php.conf configuration file and the **_php7.4-fpm.sock file_**, which declares what socket is associated with **_php-fpm_**.
+
+* **_location ~ /\.ht_** — The last location block deals with **_.htaccess_** files, which Nginx does not process. By adding the deny all directive, if any **_.htaccess_** files happen to find their way into the document root ,they will not be served to visitors.
 
 When you’re done editing, save and close the file. If you’re using **_nano_**, you can do so by typing **_CTRL+X_** and then **_y_** and **_ENTER_** to confirm.
 
