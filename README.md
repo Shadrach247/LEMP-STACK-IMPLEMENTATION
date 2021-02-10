@@ -48,11 +48,13 @@ There you have it!
 # **STEP 1 - Installing the Nginx Web Server**
 * In order to display web pages to our site visitors we are going to employ Nginx, a high performance Web Server. We'll use the **apt** Package Manager to install this package.
 * Since this is our first time using **apt** for this session, start of by updating your server's package index. Following that, you can use **apt** install to get Nginx installed:
+
 ```Bash
 $ sudo apt update
 
 $ sudo apt install nginx
 ```
+
 * When prompted, enter **Y** to confirm that you want to install Nginx. Once the installation is finished, the Nginx Web Server will be active and running on your Ubuntu 20.04 Server.
 * To verify that nginx was successfully installed and running as a service in Ubuntu, run:
 ```Bash
@@ -61,7 +63,9 @@ $ sudo systemctl status nginx
 * If it is green and running, then you did everything correctly - you have just launch your first web Server in the Clouds!
 
 * We need to configure our firewall settings to allow HTTP traffic. UFW has different application profiles that we can leverage for accomplishing that.
+
 * To list all currently available UFW application profile, **run :**
+
 ```Bash
 sudo ufw app list
 ```
@@ -74,7 +78,9 @@ _Available applications :_
 * Nginx HTTPS : This profile opens only port 443(TLS/SSL encrypted traffic)
 
 It is recommended that you enable the most restrictive profile that will still allow the traffic you've configured. Since we haven't configured SSL for our Server yet, we will ony need to allow traffic on port 80.
+
 * You can enable this by typing:
+
 ```Bash
 $ sudo ufw allow 80
 
@@ -103,10 +109,12 @@ or
 $ curl http://127.0.0.1:80
 ```
 ![UBUNTU SHELL](Curl.png)
+
 As an output, you can see some strangely formatted test, do not worry, we just made sure that our Nginx web service responds to _'curl'_ command with some payload.
 
 Now it is time for to test how our Nginx Server can respond to requests from the internet.
 * Another way to retrieve your Public IP address, other than to check it in AWS Web Console, is to use the following command.
+
 ```Bash
 curl -s http://169.254.169.254/latest/meta-data/public-ipv4
 ```
@@ -229,6 +237,11 @@ server {
 
 }
 ```
+
+* **_Like so :_**
+
+![PROJECT LEMP](nano-lemp.png)
+
 Here’s what each of these directives and location blocks do:
 
 **_listen_** — Defines what port Nginx will listen on. In this case, it will listen on port **_80_**, the default port for HTTP.
@@ -254,7 +267,7 @@ $ sudo nginx -t
 ```
 
 * You shall see following message:
-![]()
+![NGINX TEST](nginx-test.png)
 
 If any errors are reported, go back to your configuration file to review its contents before continuing.
 
@@ -312,7 +325,8 @@ http://`server_domain_or_IP`/info.php
 ```
 
 You will see a web page containing detailed information about your server:
-![]()
+
+![PHP INFO](php-v.png)
 
 After checking the relevant information about your PHP server through that page, it’s best to remove the file you created as it contains sensitive information about your PHP environment and your Ubuntu server. You can use rm to remove that file:
 
@@ -340,6 +354,8 @@ To create a new database, run the following command from your MySQL console:
 mysql> CREATE DATABASE `example_database`;
 ```
 
+* Remember to replace the **_example_database_** with the name you want for your Database during creation.
+
 Now you can create a new user and grant him full privileges on the database you have just created.
 
 The following command creates a new user named **_example_user_**, using mysql_native_password as default authentication method. We’re defining this user’s password as **_password_**, but you should replace this value with a secure password of your own choosing.
@@ -348,11 +364,17 @@ The following command creates a new user named **_example_user_**, using mysql_n
 mysql>  CREATE USER 'example_user'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
 ```
 
+* Remember to assign the **_example_user_** with a name you can associate with what you are configuring. Pick a strong password other than the default pasword place-holder "password".
+
 Now we need to give this user permission over the **_example_database_** database:
+
+* Remember to assign the **_example_user_** with the name that matches what you are configuring.
 
 ```Bash
 mysql> GRANT ALL ON example_database.* TO 'example_user'@'%';
 ```
+
+* Remember to replace the **_example_user_** with the name you gave it during creation.
 
 This will give the example_user user full privileges over the example_database database, while preventing this user from creating or modifying other databases on your server.
 
@@ -365,7 +387,12 @@ You can test if the new user has the proper permissions by logging in to the MyS
 ```Bash
 $ mysql -u example_user -p
 ```
+
+* Remember to replace the **_example_user_** with the name you gave it during creation.
+
 Notice the **_-p_** flag in this command, which will prompt you for the password used when creating the **_example_user_** user. After logging in to the MySQL console, confirm that you have access to the **_example_database_** database:
+
+* Remember to replace the **_example_user_** with the name you gave it during creation.
 
 ```Bash
 mysql> SHOW DATABASES;
@@ -373,7 +400,9 @@ mysql> SHOW DATABASES;
 
 This will give you the following output:
 
-![]()
+* **_Like so :_**
+
+![SHOW DATABSE](SHOW-DATABASES.png)
 
 Next, we’ll create a test table named todo_list. From the MySQL console, run the following statement:
 
@@ -385,11 +414,18 @@ mysql>     PRIMARY KEY(item_id)
 mysql> );
 ```
 
+* **_Like so :_**
+
+![TODO LIST](todo_list.png)
+
 Insert a few rows of content in the test table. You might want to repeat the next command a few times, using different VALUES:
 
 ```Bash
 mysql> INSERT INTO example_database.todo_list (content) VALUES ("My first important item");
 ```
+* **_Like so :_**
+
+![INSERT INTO](todo-MYSQL.png)
 
 To confirm that the data was successfully saved to your table, run:
 
@@ -399,7 +435,7 @@ mysql>  SELECT * FROM example_database.todo_list;
 
 You’ll see the following output:
 
-![]()
+![SELECT FROM](SELECT-FROM.png)
 
 After confirming that you have valid data in your test table, you can exit the MySQL console:
 
@@ -437,6 +473,10 @@ try {
 }
 ```
 
+* **_Like so :_**
+
+![PHP SCRIPT](script-php.png)
+
 Save and close the file when you are done editing.
 
 You can now access this page in your web browser by visiting the domain name or public IP address configured for your website, followed by **_/todo_list.php:_**
@@ -447,10 +487,31 @@ http://<Public_domain_or_IP>/todo_list.php
 
 You should see a page like this, showing the content you’ve inserted in your test table:
 
-![]()
+![TODO LIST](todo-list-php.png)
 
 That means your PHP environment is ready to connect and interact with your MySQL server.
 
 **_Congratulations!_**
 
 In this guide, we have built a flexible foundation for serving PHP websites and applications to your visitors, using Nginx as web server and MySQL as database management system.
+
+
+
+* **_CREDITS :_**
+ 1. [https://starter-pbl.darey.io/en/latest/project2.html](https://starter-pbl.darey.io/en/latest/project2.html)
+
+ 2. [https://linuxize.com/post/how-to-setup-a-firewall-with-ufw-on-ubuntu-20-04/](https://linuxize.com/post/how-to-setup-a-firewall-with-ufw-on-ubuntu-20-04/)
+
+ 3. [https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04)
+
+ 4. [http://www.linuxandubuntu.com/home/nano-cli-text-editor-for-everyone-basic-tutorials](http://www.linuxandubuntu.com/home/nano-cli-text-editor-for-everyone-basic-tutorials)
+
+ 5. [https://dev.mysql.com/doc/refman/8.0/en/create-user.html](https://dev.mysql.com/doc/refman/8.0/en/create-user.html)
+
+ 6. [https://www.w3schools.com/sql/sql_syntax.asp](https://www.w3schools.com/sql/sql_syntax.asp)
+
+ 7. [https://www.simplecloudhosting.net/what-is-lemp-stack.html](https://www.simplecloudhosting.net/what-is-lemp-stack.html)
+
+ 8. [https://www.youtube.com/watch?v=qdwWe9COT9k&feature=youtu.be](https://www.youtube.com/watch?v=qdwWe9COT9k&feature=youtu.be)
+
+ 9. [https://www.youtube.com/watch?app=desktop&v=NdQL-mUGnUE](https://www.youtube.com/watch?app=desktop&v=NdQL-mUGnUE)
