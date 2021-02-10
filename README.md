@@ -272,7 +272,8 @@ This will tell Nginx to use the configuration next time it is reloaded. You can 
 $ sudo nginx -t
 ```
 
-* You shall see following message:
+* You shall see the following message:
+
 ![NGINX TEST](nginx-test.png)
 
 If any errors are reported, go back to your configuration file to review its contents before continuing.
