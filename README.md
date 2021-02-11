@@ -20,6 +20,10 @@ MySQL is the second most widely used open source relational database management 
 
 PHP is a server-side scripting language designed for web development. The scripting role can also be filled with Python or Perl. Servers such as Gunicorn or uWSGI can be used in conjunction with Nginx to serve these applications.
 
+A visualized **_LEMP Stack :_**
+
+![LEMP STACK](LEMP-A.png)
+
 
 * In order to complete this project you will need an AWS account and a Vitual Server with Ubuntu Server OS.
 * To learn how to create an AWS free tier account and an EC2 Instance of t2.micro family with Ubuntu Server 20.04 LTS(HVM), follow this link: [Create an EC2 Instance in AWS](https://github.com/Shadrach247/LAMP-STACK-IMPLEMENTATION-IN-AWS)
